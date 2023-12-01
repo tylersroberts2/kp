@@ -17,36 +17,41 @@ if (isset($_FILES['jsonFile'])) {
     $jsonData = file_get_contents($jsonFile);
     $data = json_decode($jsonData, true);
 
+    // Prepare the SQL statement
+    $stmt = $conn->prepare("INSERT INTO SONG_INFO (added_at, track_name, track_id, album_name, album_id, artist_name, artist_id, duration_ms, popularity, explicit, preview_url, track_uri) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
     // Loop through the JSON data
     foreach ($data["items"] as $item) {
-        // Extracting data from JSON
-        $added_at = $item['added_at'];
+        // Extract data from each item
         $track = $item['track'];
-        $track_name = $conn->real_escape_string($track['name']);
+        $added_at = $item['added_at'];
+        $track_name = $track['name'];
         $track_id = $track['id'];
-        $album = $track['album'];
-        $album_name = $conn->real_escape_string($album['name']);
-        $album_id = $album['id'];
-        $artist = $track['artists'][0]; // considering first artist
-        $artist_name = $conn->real_escape_string($artist['name']);
-        $artist_id = $artist['id'];
+        $album_name = $track['album']['name'];
+        $album_id = $track['album']['id'];
+        $artist_name = $track['artists'][0]['name']; // considering first artist
+        $artist_id = $track['artists'][0]['id'];
         $duration_ms = $track['duration_ms'];
         $popularity = $track['popularity'];
-        $explicit = $track['explicit'] ? 1 : 0;
-        $preview_url = isset($track['preview_url']) ? $track['preview_url'] : "";
+        $explicit = $track['explicit'] ? 1 : 0; // Convert boolean to integer
+        $preview_url = $track['preview_url'];
         $track_uri = $track['uri'];
 
-        // SQL to insert data
-        $sql = "INSERT INTO songs (added_at, track_name, track_id, album_name, album_id, artist_name, artist_id, duration_ms, popularity, explicit, preview_url, track_uri) 
-                VALUES ('$added_at', '$track_name', '$track_id', '$album_name', '$album_id', '$artist_name', '$artist_id', $duration_ms, $popularity, $explicit, '$preview_url', '$track_uri')";
+        // Bind parameters to the prepared statement
+        $stmt->bind_param("sssssssiibss", $added_at, $track_name, $track_id, $album_name, $album_id, $artist_name, $artist_id, $duration_ms, $popularity, $explicit, $preview_url, $track_uri);
 
-        // Execute query
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+        // Execute the prepared statement
+        if ($stmt->execute()) {
+            echo "New record created successfully\n";
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "Error: " . $stmt->error . "\n";
         }
     }
+
+    // Close statement
+    $stmt->close();
+} else {
+    echo "No file uploaded";
 }
 
 // Close connection
