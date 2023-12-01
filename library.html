@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kansas Project - Your Ultimate Music Collaboration Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img id="icon" src="/res/logo.png" alt="Kansas Project Logo">
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="signIn.html">Sign In</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Playlist Section -->
+    <section id="features" class="features">
+        <lib>
+        <div class="feature">
+                <a href="upload_music.php"><h2>Create Playlists</h2></a>
+            </a>
+            <p>Create and manage your music playlists with ease.</p>
+        </div>
+        </lib>>
+        <form action="upload_music.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="file"><br/>
+            <input type="submit" value="Upload">
+        </form>
+    </section>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; DBMS 2023 Kansas Project</p>
+    </footer>
+</body>
+</html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var features = document.querySelectorAll('.feature');
+
+    features.forEach(function(feature) {
+        console.log(feature.textContent);
+    });
+});
+</script>

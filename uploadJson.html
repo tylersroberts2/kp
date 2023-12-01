@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kansas Project - Your Ultimate Music Collaboration Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img id="icon" src="/res/logo.png" alt="Kansas Project Logo">
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="signIn.html">Sign In</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Upload JSON File</h1>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        Select JSON file to upload:
+        <input type="file" name="jsonFile" id="jsonFile">
+        <input type="submit" value="Upload JSON" name="submit">
+    </form>
+
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; DBMS 2023 Kansas Project</p>
+    </footer>
+</body>
+</html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var features = document.querySelectorAll('.feature');
+
+    features.forEach(function(feature) {
+        console.log(feature.textContent);
+    });
+});
+</script>
